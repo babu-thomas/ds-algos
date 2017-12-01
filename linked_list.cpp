@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 using namespace std;
 
 struct Node {
@@ -13,6 +14,7 @@ Node* from_array3(int *array, int len);
 void print(Node *head);
 int length(Node *head);
 int count_of(int data, Node *head);
+int get_nth(int n, Node *head);
 
 // Adds a node to the beginning of the linked list
 void push(Node **head_ref, int data)
@@ -100,6 +102,18 @@ int count_of(int data, Node *head)
 	return count;
 }
 
+int get_nth(int n, Node *head)
+{
+	assert(n < length(head));
+	int index = 0;
+	for(Node *node = head; node != nullptr; node = node->next, ++index) {
+		if(index == n)
+			return node->data;
+	}
+	
+	return 0;
+}
+
 int main()
 {
 	int data[] = {1, 2, 3, 4, 5};
@@ -113,5 +127,6 @@ int main()
 	
 	cout << length(head1) << "\n";
 	cout << count_of(3, head1) << "\n";
+	cout << get_nth(4, head1) << "\n";
 	return 0;
 }
