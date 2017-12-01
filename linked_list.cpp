@@ -17,6 +17,7 @@ int count_of(int data, Node *head);
 int get_nth(int n, Node *head);
 void delete_list(Node **head_ref);
 int pop(Node **head_ref);
+void insert_at(int index, int data, Node **head_ref);
 
 
 // Adds a node to the beginning of the linked list
@@ -137,6 +138,25 @@ int pop(Node **head_ref)
 	return data;
 }
 
+// Inserts a new node at given index with given data. Pass one past end index to insert at end.
+void insert_at(int index, int data, Node **head_ref)
+{
+	assert(index <= length(*head_ref));
+	Node **last_ptr = head_ref;
+	Node *new_node = new Node{data, nullptr};
+	int i = 0;
+	for(Node *node = *head_ref; node != nullptr; node = node->next) {
+		if(i == index) {
+			new_node->next = *last_ptr;
+			(*last_ptr) = new_node;
+			return;
+		}
+		last_ptr = &((*last_ptr)->next);
+		++i;
+	}
+	(*last_ptr) = new_node;
+}
+
 int main()
 {
 	int data[] = {1, 2, 3, 4, 5};
@@ -150,7 +170,11 @@ int main()
 	pop(&head3);
 	push(&head3, 6);
 	print(head3);
-	
+	insert_at(2, 7, &head3);
+	insert_at(0, 8, &head3);
+	insert_at(6, 9, &head3);
+	print(head3);
+		
 	cout << length(head1) << "\n";
 	cout << count_of(3, head1) << "\n";
 	cout << get_nth(4, head1) << "\n";
