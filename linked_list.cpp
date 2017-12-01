@@ -16,6 +16,7 @@ int length(Node *head);
 int count_of(int data, Node *head);
 int get_nth(int n, Node *head);
 void delete_list(Node **head_ref);
+int pop(Node **head_ref);
 
 
 // Adds a node to the beginning of the linked list
@@ -127,6 +128,15 @@ void delete_list(Node **head_ref)
 	(*head_ref) = nullptr;
 }
 
+int pop(Node **head_ref)
+{
+	assert((*head_ref) != nullptr);
+	int data = (*head_ref)->data;
+	(*head_ref) = (*head_ref)->next;
+	
+	return data;
+}
+
 int main()
 {
 	int data[] = {1, 2, 3, 4, 5};
@@ -136,6 +146,9 @@ int main()
 	Node* head2 = from_array2(data, len);
 	print(head2);
 	Node* head3 = from_array3(data, len);
+	pop(&head3);
+	pop(&head3);
+	push(&head3, 6);
 	print(head3);
 	
 	cout << length(head1) << "\n";
