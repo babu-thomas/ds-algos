@@ -15,6 +15,8 @@ void print(Node *head);
 int length(Node *head);
 int count_of(int data, Node *head);
 int get_nth(int n, Node *head);
+void delete_list(Node **head_ref);
+
 
 // Adds a node to the beginning of the linked list
 void push(Node **head_ref, int data)
@@ -114,6 +116,17 @@ int get_nth(int n, Node *head)
 	return 0;
 }
 
+void delete_list(Node **head_ref)
+{
+	Node *next = nullptr;
+	for(Node *i = *head_ref; i != nullptr; ) {
+		next = i->next;
+		free(i);
+		i = next;
+	}
+	(*head_ref) = nullptr;
+}
+
 int main()
 {
 	int data[] = {1, 2, 3, 4, 5};
@@ -128,5 +141,7 @@ int main()
 	cout << length(head1) << "\n";
 	cout << count_of(3, head1) << "\n";
 	cout << get_nth(4, head1) << "\n";
+	delete_list(&head2);
+	delete_list(&head3);
 	return 0;
 }
