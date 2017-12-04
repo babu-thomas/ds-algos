@@ -19,6 +19,7 @@ void delete_list(Node **head_ref);
 int pop(Node **head_ref);
 void insert_at(int index, int data, Node **head_ref);
 void move_node(Node **src_ref, Node **dest_ref);
+void reverse(Node **head_ref);
 
 
 // Adds a node to the beginning of the linked list
@@ -170,6 +171,16 @@ void move_node(Node **src_ref, Node **dest_ref)
 	(*src_ref) = src_next;
 }
 
+// Reverse a linked list. Works by moving each node to front of the list one by one.
+void reverse(Node **head_ref)
+{
+	Node *result = nullptr;
+	for(Node *i = *head_ref; i != nullptr;) {
+		move_node(&i, &result);
+	}
+	(*head_ref) = result;
+}
+
 int main()
 {
 	int data[] = {1, 2, 3, 4, 5};
@@ -190,6 +201,7 @@ int main()
 	insert_at(2, 7, &head3);
 	insert_at(0, 8, &head3);
 	insert_at(6, 9, &head3);
+	reverse(&head3);
 	print(head3);
 		
 	cout << length(head1) << "\n";
