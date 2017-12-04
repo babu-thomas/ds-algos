@@ -18,6 +18,7 @@ int get_nth(int n, Node *head);
 void delete_list(Node **head_ref);
 int pop(Node **head_ref);
 void insert_at(int index, int data, Node **head_ref);
+void move_node(Node **src_ref, Node **dest_ref);
 
 
 // Adds a node to the beginning of the linked list
@@ -157,6 +158,16 @@ void insert_at(int index, int data, Node **head_ref)
 	(*last_ptr) = new_node;
 }
 
+// Removes the front node of the first list and inserts it into front of the second list
+void move_node(Node **src_ref, Node **dest_ref)
+{
+	assert(*src_ref != nullptr);
+	Node *src_next = (*src_ref)->next;
+	(*src_ref)->next = *dest_ref;
+	(*dest_ref) = *src_ref;
+	(*src_ref) = src_next;
+}
+
 int main()
 {
 	int data[] = {1, 2, 3, 4, 5};
@@ -164,6 +175,10 @@ int main()
 	Node* head1 = from_array1(data, len);
 	print(head1);
 	Node* head2 = from_array2(data, len);
+	print(head2);
+	for(int i = 0; i < 4; i++)
+		move_node(&head1, &head2);
+	print(head1);
 	print(head2);
 	Node* head3 = from_array3(data, len);
 	pop(&head3);
@@ -177,7 +192,7 @@ int main()
 		
 	cout << length(head1) << "\n";
 	cout << count_of(3, head1) << "\n";
-	cout << get_nth(4, head1) << "\n";
+	cout << get_nth(4, head2) << "\n";
 	delete_list(&head2);
 	delete_list(&head3);
 	return 0;
