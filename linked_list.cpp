@@ -127,7 +127,7 @@ void delete_list(Node **head_ref)
 	Node *next = nullptr;
 	for(Node *i = *head_ref; i != nullptr; ) {
 		next = i->next;
-		free(i);
+		delete(i);
 		i = next;
 	}
 	(*head_ref) = nullptr;
@@ -207,6 +207,7 @@ int main()
 	cout << length(head1) << "\n";
 	cout << count_of(3, head1) << "\n";
 	cout << get_nth(4, head2) << "\n";
+	delete_list(&head1);
 	delete_list(&head2);
 	delete_list(&head3);
 	return 0;
