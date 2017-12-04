@@ -28,7 +28,8 @@ void push(Node **head_ref, int data)
 	(*head_ref) = new_node;
 }
 
-// Makes a linked list from the elements of the array. The elements are added in the same order as in the array.
+// Makes a linked list from the elements of the array. The elements are added in the same order as
+// in the array.
 // In this version, insertion of first element is handled separately.
 Node* from_array1(int *array, int len)
 {
@@ -63,7 +64,8 @@ Node* from_array2(int *array, int len)
 	return dummy.next;
 }
 
-// In this version, separate case for first element is avoided by using a reference pointer that points to the next pointer of the last node
+// In this version, separate case for first element is avoided by using a reference pointer that
+// points to the next pointer of the last node
 Node* from_array3(int *array, int len)
 {
 	Node *head = nullptr;
