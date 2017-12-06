@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <cassert>
 using namespace std;
 
@@ -8,9 +9,9 @@ struct Node {
 };
 
 void push(Node **head_ref, int data);
-Node* from_array1(int *array, int len);
-Node* from_array2(int *array, int len);
-Node* from_array3(int *array, int len);
+Node* from_array1(const vector<int>& array);
+Node* from_array2(const vector<int>& array);
+Node* from_array3(const vector<int>& array);
 void print(Node *head);
 int length(Node *head);
 int count_of(int data, Node *head);
@@ -32,8 +33,9 @@ void push(Node **head_ref, int data)
 // Makes a linked list from the elements of the array. The elements are added in the same order as
 // in the array.
 // In this version, insertion of first element is handled separately.
-Node* from_array1(int *array, int len)
+Node* from_array1(const vector<int>& array)
 {
+	int len = array.size();
 	Node* head = nullptr;
 	Node* tail = nullptr;
 	
@@ -50,8 +52,9 @@ Node* from_array1(int *array, int len)
 }
 
 // In this version, separate case for first element is avoided by using temporary dummy node
-Node* from_array2(int *array, int len)
+Node* from_array2(const vector<int>& array)
 {
+	int len = array.size();
 	Node dummy;
 	dummy.next = nullptr;
 	Node* tail = &dummy;
@@ -67,8 +70,9 @@ Node* from_array2(int *array, int len)
 
 // In this version, separate case for first element is avoided by using a reference pointer that
 // points to the next pointer of the last node
-Node* from_array3(int *array, int len)
+Node* from_array3(const vector<int>& array)
 {
+	int len = array.size();
 	Node *head = nullptr;
 	Node** last_ptr = &head;
 	
@@ -183,17 +187,16 @@ void reverse(Node **head_ref)
 
 int main()
 {
-	int data[] = {1, 2, 3, 4, 5};
-	int len = sizeof(data)/sizeof(int);
-	Node* head1 = from_array1(data, len);
+	vector<int> data = {1, 2, 3, 4, 5};
+	Node* head1 = from_array1(data);
 	print(head1);
-	Node* head2 = from_array2(data, len);
+	Node* head2 = from_array2(data);
 	print(head2);
 	for(int i = 0; i < 4; i++)
 		move_node(&head1, &head2);
 	print(head1);
 	print(head2);
-	Node* head3 = from_array3(data, len);
+	Node* head3 = from_array3(data);
 	pop(&head3);
 	pop(&head3);
 	push(&head3, 6);
@@ -201,6 +204,7 @@ int main()
 	insert_at(2, 7, &head3);
 	insert_at(0, 8, &head3);
 	insert_at(6, 9, &head3);
+	print(head3);
 	reverse(&head3);
 	print(head3);
 		
