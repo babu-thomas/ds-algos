@@ -12,15 +12,17 @@ struct Node {
 };
 
 void push(Node **head_ref, int data);
+void append(Node **head_ref, int data);
 void print(Node *head);
 Node* xor_ptr(Node* a, Node* b);
 
 int main()
 {
 	Node *head = nullptr;
-	push(&head, 1);
-	push(&head, 2);
+	append(&head, 1);
+	append(&head, 2);
 	push(&head, 3);
+	append(&head, 4);
 	print(head);
 	return 0;
 }
@@ -51,6 +53,27 @@ void push(Node **head_ref, int data)
 		(*head_ref)->ptr = xor_ptr(prev, next);
 	}
 	*head_ref = new_node;
+}
+
+// Add a node to end of linked list
+void append(Node **head_ref, int data)
+{
+	// If list is empty
+	if((*head_ref) == nullptr) {
+		push(head_ref, data);
+		return;
+	}
+	
+	//Find last node
+	Node *prev = nullptr;
+	Node *next = nullptr;
+	Node *current = *head_ref;
+	while(current != nullptr) {
+		next = xor_ptr(prev, current->ptr);
+		prev = current;
+		current = next;
+	}
+	push(&prev, data);
 }
 
 // XORs 2 pointers in a safe way by converting them to uintptr_t, XORing and then converting back
