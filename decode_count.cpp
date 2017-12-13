@@ -31,9 +31,7 @@ int main()
 	// Only needed for decode_count2() (second solution)
 	fill(dp, dp + size, -1);
 	cout << decode_count2(code1, 0, dp) << "\n";
-	
-	// Only needed for decode_count3() (third solution)
-	make_table(dp, code1);
+
 	cout << decode_count3(code1, dp) << "\n";
 	
 	cout << decode_count4(code1) << "\n";
@@ -95,6 +93,7 @@ int decode_count2(const vector<int>& code, int n, int dp[])
 
 int decode_count3(const vector<int>& code, int dp[])
 {
+	make_table(dp, code);
 	return dp[0];
 }
 
@@ -137,11 +136,13 @@ int decode_count4(const vector<int>& code)
 	
 	for(int i = len - 2; i >= 0; i--) {
 		count = 0;
+		// If current digit is zero, no single digit code possible
 		if(code[i] == 0) {
 			first = second;
 			second = count;
 			continue;
 		}
+		// If double digit code is possible
 		if(code[i] <= 2 && code[i + 1] <= 6) {
 			count = first;
 		}
