@@ -8,6 +8,7 @@
 // 1. Solution using recursion. Exponential time complexity.
 // 2. Top down DP solution
 // 3. Bottom up DP solution
+// 4. Bottom up DP solution in O(1) extra space.
 
 #include <iostream>
 #include <algorithm>
@@ -18,6 +19,7 @@ int decode_count1(const vector<int>& code, int n);
 int decode_count2(const vector<int>& code, int n, int dp[]);
 int decode_count3(const vector<int>& code, int dp[]);
 void make_table(int dp[], const vector<int>& code);
+int decode_count4(const vector<int>& code);
 
 int main()
 {
@@ -33,7 +35,9 @@ int main()
 	// Only needed for decode_count3() (third solution)
 	make_table(dp, code1);
 	cout << decode_count3(code1, dp) << "\n";
-
+	
+	cout << decode_count4(code1) << "\n";
+	
 	return 0;
 }
 
@@ -48,7 +52,7 @@ int decode_count1(const vector<int>& code, int n)
 	// If current digit is zero, no single digit code possible
 	if(code[n] == 0)
 		return 0;
-		
+
 	int count = 0;
 	// If double digit code is possible
 	if(code[n] <= 2 && code[n + 1] <= 6)
@@ -116,4 +120,36 @@ void make_table(int dp[], const vector<int>& code)
 		
 		dp[i] += dp[i + 1];
 	}
+}
+
+int decode_count4(const vector<int>& code)
+{
+	int len = code.size();
+	int first = 1;
+	
+	int second;
+	if(code[len - 1] == 0)
+		second = 0;
+	else
+		second = 1;
+	
+	int count = 0;
+	
+	for(int i = len - 2; i >= 0; i--) {
+		count = 0;
+		if(code[i] == 0) {
+			first = second;
+			second = count;
+			continue;
+		}
+		if(code[i] <= 2 && code[i + 1] <= 6) {
+			count = first;
+		}
+		
+		count += second;
+		first = second;
+		second = count;
+	}
+	
+	return count;
 }
