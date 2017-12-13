@@ -27,16 +27,15 @@ int decode_count1(const vector<int>& code, int n)
 	if(n >= code.size() - 1)
 		return 1;
 	
-	int count = 0;
 	// If current digit is zero, no single digit code possible
 	if(code[n] == 0)
 		return 0;
+		
+	int count = 0;
 	// If double digit code is possible
-	if(code[n] <= 2 && code[n + 1] <= 6) {
-		count = decode_count1(code, n + 1) + decode_count1(code, n + 2);
-		return count;
-	}
+	if(code[n] <= 2 && code[n + 1] <= 6)
+		count = decode_count1(code, n + 2);
 	
-	count = decode_count1(code, n + 1);
+	count += decode_count1(code, n + 1);
 	return count;
 }
