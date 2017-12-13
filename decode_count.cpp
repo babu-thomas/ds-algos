@@ -21,7 +21,7 @@ void make_table(int dp[], const vector<int>& code);
 
 int main()
 {
-	vector<int> code1 = {2, 0, 4, 1, 1};
+	vector<int> code1 = {2, 0, 4, 1, 0};
 	cout << decode_count1(code1, 0) << "\n";
 	
 	int size = code1.size() + 1;
@@ -33,15 +33,18 @@ int main()
 	// Only needed for decode_count3() (third solution)
 	make_table(dp, code1);
 	cout << decode_count3(code1, dp) << "\n";
-	
+
 	return 0;
 }
 
 int decode_count1(const vector<int>& code, int n)
 {
-	if(n >= code.size() - 1)
+	if(n == code.size())
 		return 1;
-	
+
+	if(n == code.size() - 1 && code[n] != 0)
+		return 1;
+
 	// If current digit is zero, no single digit code possible
 	if(code[n] == 0)
 		return 0;
@@ -60,7 +63,12 @@ int decode_count2(const vector<int>& code, int n, int dp[])
 	if(dp[n] >= 0)
 		return dp[n];
 
-	if(n >= code.size() - 1) {
+	if(n == code.size()) {
+		dp[n] = 1;
+		return dp[n];
+	}
+
+	if(n == code.size() - 1 && code[n] != 0) {
 		dp[n] = 1;
 		return dp[n];
 	}
@@ -90,7 +98,12 @@ void make_table(int dp[], const vector<int>& code)
 {
 	int size = code.size();
 	dp[size] = 1;
-	dp[size - 1] = 1;
+	
+	if(code[size - 1] == 0)
+		dp[size - 1] = 0;
+	else
+		dp[size - 1] = 1;
+	
 	for(int i = size - 2; i >= 0; i--) {
 		dp[i] = 0;
 		// If current digit is zero, no single digit code possible
