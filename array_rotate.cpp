@@ -17,8 +17,8 @@ void rotate1(vector<int>& a, int r)
 	// Save last r elements
 	vector<int> temp(a.end() - r, a.end());
 	// Shift other elements
-	for(int i = n - 1, j = n - r - 1; j >= 0; i--, j--)
-		a[i] = a[j];
+	for(int i = n - r - 1; i >= 0; i--)
+		a[i + r] = a[i];
 	// Put last r elements in the right place
 	for(int i = 0; i < temp.size(); i++)
 		a[i] = temp[i];
