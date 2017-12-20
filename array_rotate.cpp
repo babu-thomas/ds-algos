@@ -41,16 +41,19 @@ void rotate2(vector<int>& a, int r)
 	}
 }
 
+void print(const vector<int>& a)
+{
+	for(auto &i: a)
+		cout << i << " ";
+	cout << "\n";
+}
+
 int main()
 {
 	vector<int> a = {1, 2, 3, 4, 5, 6};
 	rotate1(a, 10);
-	for(auto &i: a)
-		cout << i << " ";
-	cout << "\n";
-	rotate2(a, 10)
-	for(auto &i: a)
-		cout << i << " ";
-	cout << "\n";
+	print(a);
+	rotate2(a, 10);
+	print(a);
 	return 0;
 }
