@@ -6,9 +6,11 @@
 
 // 1. Solution using temp array. Time - O(N), Space - O(r).
 // 2. Solution in which "r" one element rotations are performed. Time - O(N * r), Space - O(1).
+// 3. Solution using three reversals. Time - O(N), Space - O(1).
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 void rotate1(vector<int>& a, int r)
@@ -41,6 +43,14 @@ void rotate2(vector<int>& a, int r)
 	}
 }
 
+void rotate3(vector<int>& a, int r)
+{
+	r = r % a.size();
+	reverse(a.begin(), a.end() - r);
+	reverse(a.end() - r, a.end());
+	reverse(a.begin(), a.end());
+}
+
 void print(const vector<int>& a)
 {
 	for(auto &i: a)
@@ -54,6 +64,8 @@ int main()
 	rotate1(a, 10);
 	print(a);
 	rotate2(a, 10);
+	print(a);
+	rotate3(a, 10);
 	print(a);
 	return 0;
 }
