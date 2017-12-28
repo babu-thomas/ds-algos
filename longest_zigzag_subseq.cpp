@@ -2,6 +2,8 @@
 // https://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493
 // Screenshot - https://i.imgur.com/9JB2PmR.png
 
+// 1. Solution using DP. Time - O(N^2), Space - O(N).
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
