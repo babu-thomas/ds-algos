@@ -1,4 +1,4 @@
-// Given an unsorted array of integers, find all unique triplets in the array which gives the sum
+// Given an unsorted array of integers, find all triplets in the array which gives the sum
 // of zero.
 // For example,
 // Input - -1, 0, 1, 2, -1, -4
@@ -6,10 +6,12 @@
 //	-1, 0, 1
 //	-1, -1, 2
 
-// 1. Naive solution. Try all possible triplets. Time - O(N^3), Space - O(1)
+// 1. Naive solution. Try all possible triplets. Time - O(N^3), Space - O(1).
+// 2. Use Hash Table. Time - O(N^2), Space - O(N).
 
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
 void three_sum1(vector<int> a)
@@ -31,9 +33,33 @@ void three_sum1(vector<int> a)
 		cout << "No triplet with zero sum" << "\n";
 }
 
+void three_sum2(vector<int> a)
+{
+	int size = a.size();
+	bool found = false;
+	for(int i = 0; i < size - 2; i++) {
+		int first = a[i];
+		unordered_map<int, bool> pairs;
+		for(int j = i + 1; j < size; j++) {
+			int second = a[j];
+			int third = -(first + second);
+			if(pairs.count(third) > 0) {
+				found = true;
+				cout << first << ", " << second << ", " << third << "\n";
+			}
+			pairs[second] = true;
+		}
+	}
+	
+	if(!found)
+		cout << "No triplet with zero sum" << "\n";
+}
+
 int main()
 {
 	vector<int> a = {-1, 0, 1, 2, -1, -4};
 	three_sum1(a);
+	cout << "\n";
+	three_sum2(a);
 	return 0;
 }
