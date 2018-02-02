@@ -6,6 +6,8 @@
 // Output -
 //	-2, 0, 2
 
+// 1. Sort then use two pointer approach, skipping duplicates. Time - O(N^2), Space - O(1).
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
