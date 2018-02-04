@@ -7,12 +7,26 @@
 
 // 1. Naive solution. Sum all contiguous subarrays and return the max sum.
 //    Time - O(N^2), Space - O(1).
+// 2. Divide and conquer solution. Time - O(N.LogN), Space - O(1).
 
 #include <iostream>
 #include <vector>
 #include <limits>
 #include <algorithm>
 using namespace std;
+
+int max_subarray_sum1(const vector<int>& a);
+int max_subarray_sum2(const vector<int>& a);
+int max_subarray_sum_rec(const vector<int>& a, int left, int right);
+int max_subarray_cross_sum(const vector<int>& a, int left, int mid, int right);
+
+int main()
+{
+	vector<int> a = {-2, -5, 6, -2, -3, 1, 5, -6};
+	cout << max_subarray_sum1(a) << "\n";
+	cout << max_subarray_sum2(a) << "\n";
+	return 0;
+}
 
 int max_subarray_sum1(const vector<int>& a)
 {
@@ -28,9 +42,39 @@ int max_subarray_sum1(const vector<int>& a)
 	return max_sum;
 }
 
-int main()
+int max_subarray_sum2(const vector<int>& a)
 {
-	vector<int> a = {-2, -5, 6, -2, -3, 1, 5, -6};
-	cout << max_subarray_sum1(a) << "\n";
-	return 0;
+	return max_subarray_sum_rec(a, 0, a.size() - 1);
+}
+
+int max_subarray_sum_rec(const vector<int>& a, int left, int right)
+{
+	if(left == right)
+		return a[left];
+	
+	int mid = left + (right - left) / 2;
+	int left_sum = max_subarray_sum_rec(a, left, mid);
+	int right_sum = max_subarray_sum_rec(a, mid + 1, right);
+	int cross_sum = max_subarray_cross_sum(a, left, mid, right);
+	
+	return max(left_sum, max(cross_sum, right_sum));
+}
+
+int max_subarray_cross_sum(const vector<int>& a, int left, int mid, int right)
+{
+	int left_max = numeric_limits<int>::min();
+	int sum = 0;
+	for(int i = mid; i >= left; i--) {
+		sum += a[i];
+		left_max = max(left_max, sum);
+	}
+	
+	int right_max = numeric_limits<int>::min();
+	sum = 0;
+	for(int i = mid + 1; i <= right; i++) {
+		sum += a[i];
+		right_max = max(right_max, sum);
+	}
+	
+	return left_max + right_max;
 }
