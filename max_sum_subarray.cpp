@@ -8,6 +8,7 @@
 // 1. Naive solution. Sum all contiguous subarrays and return the max sum.
 //    Time - O(N^2), Space - O(1).
 // 2. Divide and conquer solution. Time - O(N.LogN), Space - O(1).
+// 3. Kadane's algorithm. Time - O(N), Space - O(1).
 
 #include <iostream>
 #include <vector>
@@ -19,12 +20,14 @@ int max_subarray_sum1(const vector<int>& a);
 int max_subarray_sum2(const vector<int>& a);
 int max_subarray_sum_rec(const vector<int>& a, int left, int right);
 int max_subarray_cross_sum(const vector<int>& a, int left, int mid, int right);
+int max_subarray_sum3(const vector<int>& a);
 
 int main()
 {
 	vector<int> a = {-2, -5, 6, -2, -3, 1, 5, -6};
 	cout << max_subarray_sum1(a) << "\n";
 	cout << max_subarray_sum2(a) << "\n";
+	cout << max_subarray_sum3(a) << "\n";
 	return 0;
 }
 
@@ -82,4 +85,16 @@ int max_subarray_cross_sum(const vector<int>& a, int left, int mid, int right)
 	}
 	
 	return left_max + right_max;
+}
+
+int max_subarray_sum3(const vector<int>& a)
+{
+	int max_sum = a[0];
+	int max_ending_here = a[0];
+	for(int i = 1; i < a.size(); i++) {
+		max_ending_here = max(max_ending_here + a[i], a[i]);
+		max_sum = max(max_sum, max_ending_here);
+	}
+	
+	return max_sum;
 }
