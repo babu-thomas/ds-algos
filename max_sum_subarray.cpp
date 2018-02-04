@@ -53,8 +53,11 @@ int max_subarray_sum_rec(const vector<int>& a, int left, int right)
 		return a[left];
 	
 	int mid = left + (right - left) / 2;
+	// Max subarray sum such that all elements are in the left half
 	int left_sum = max_subarray_sum_rec(a, left, mid);
+	// Max subarray sum such that all elements are in the right half
 	int right_sum = max_subarray_sum_rec(a, mid + 1, right);
+	// Max subarray sum containing elements from both halves
 	int cross_sum = max_subarray_cross_sum(a, left, mid, right);
 	
 	return max(left_sum, max(cross_sum, right_sum));
@@ -62,6 +65,7 @@ int max_subarray_sum_rec(const vector<int>& a, int left, int right)
 
 int max_subarray_cross_sum(const vector<int>& a, int left, int mid, int right)
 {
+	// Max suffix sum of left half
 	int left_max = numeric_limits<int>::min();
 	int sum = 0;
 	for(int i = mid; i >= left; i--) {
@@ -69,6 +73,7 @@ int max_subarray_cross_sum(const vector<int>& a, int left, int mid, int right)
 		left_max = max(left_max, sum);
 	}
 	
+	// Max prefix sum of right half
 	int right_max = numeric_limits<int>::min();
 	sum = 0;
 	for(int i = mid + 1; i <= right; i++) {
