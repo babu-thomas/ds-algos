@@ -96,7 +96,9 @@ int longest_non_repeating_substring3(const string& s)
 	
 	for(int start = 0, end = 0; end < size; end++) {
 		// If end character already present in substring, adjust start index to skip its
-		// previous occurrence
+		// previous occurrence.
+		// We take max because we are not deleting entries from the found map when start is updated.
+		// If start is already after the index stored in the map, then we don't update it.
 		if(found.count(s[end]) > 0)
 			start = max(found[s[end]] + 1, start);
 		
