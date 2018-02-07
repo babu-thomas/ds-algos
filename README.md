@@ -94,7 +94,7 @@
 		- In naive approach we are checking the whole substring for uniqueness again when adding a single character.
 		This is unnecessary. If a substring from index `i` to `j` is already unique then we only need to check
 		if character at index `j + 1` is already present in the substring for checking uniqueness of substring from
-		index `i` to `j + 1`
+		index `i` to `j + 1`.
 		- We maintain two indices to `start` and `end` of substring. We try to extend the substring
 		by incrementing `end`. If the new character is already present in the substring, we increment
 		the `start` index and try again. At every step the substring in the window, between `start`
