@@ -81,3 +81,26 @@
 		prefix along with the element at index `i + 1` or it will only include the single element at
 		index `i + 1`, whichever is greater.
 		- The maximum of these values calculated for each index is the solution to the original problem.
+
+## 2018-02-06
+### [longest_non_repeating_substring.cpp](https://github.com/babu-thomas/ds-algos/blob/master/longest_non_repeating_substring.cpp)
+- Longest non repeating substring - Find length of the longest substring with no repeating characters
+	- Naive approach is to check all substrings for uniqueness. There are O(N^2) substrings and checking
+	a substring of length `L` takes O(L) time. So worst case time complexity is O(N^3).
+	- To check if a substring is unique or not, we insert its characters into a set. The set in the worst
+	case can contain all characters of input alphabet. Thus, space complexity is O(S), where
+	`S` is size of input alphabet.
+	- In naive approach we are checking the whole substring for uniqueness again when adding a single character.
+	This is unnecessary. If a substring from index `i` to `j` is already unique then we only need to check
+	if character at index `j + 1` is already present in the substring for checking uniqueness of substring from
+	index `i` to `j + 1`
+	- This approach is called the sliding window approach. We maintain two indices to `start` and `end` of
+	substring. We try to extend the substring by incrementing `end`. If the new character is already present
+	in the substring, we increment the `start` index and try again. At every step the substring in the window,
+	between `start` and `end` is a non repeating substring.
+	- In the worst case we access every character twice, first as `start` and then as `end`. Thus, time complexity
+	is O(N). Space complexity is O(S) as before because we still need to insert characters of the current
+	substring into a set, which in the worst case will contain all characters of the input alphabet (of size S).
+	- The sliding window approach can be further optimized. We can store the indices where the characters are found.
+	Then when adding a new character to the substring, if it is already present, we can make use of the stored
+	index to skip the previous occurrence, instead of just incrementing `start` by 1.
