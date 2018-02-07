@@ -90,17 +90,18 @@
 	- To check if a substring is unique or not, we insert its characters into a set. The set in the worst
 	case can contain all characters of input alphabet. Thus, space complexity is O(S), where
 	`S` is size of input alphabet.
-	- In naive approach we are checking the whole substring for uniqueness again when adding a single character.
-	This is unnecessary. If a substring from index `i` to `j` is already unique then we only need to check
-	if character at index `j + 1` is already present in the substring for checking uniqueness of substring from
-	index `i` to `j + 1`
-	- This approach is called the sliding window approach. We maintain two indices to `start` and `end` of
-	substring. We try to extend the substring by incrementing `end`. If the new character is already present
-	in the substring, we increment the `start` index and try again. At every step the substring in the window,
-	between `start` and `end` is a non repeating substring.
-	- In the worst case we access every character twice, first as `start` and then as `end`. Thus, time complexity
-	is O(N). Space complexity is O(S) as before because we still need to insert characters of the current
-	substring into a set, which in the worst case will contain all characters of the input alphabet (of size S).
-	- The sliding window approach can be further optimized. We can store the indices where the characters are found.
-	Then when adding a new character to the substring, if it is already present, we can make use of the stored
-	index to skip the previous occurrence, instead of just incrementing `start` by 1.
+	- Sliding window approach
+		- In naive approach we are checking the whole substring for uniqueness again when adding a single character.
+		This is unnecessary. If a substring from index `i` to `j` is already unique then we only need to check
+		if character at index `j + 1` is already present in the substring for checking uniqueness of substring from
+		index `i` to `j + 1`
+		- We maintain two indices to `start` and `end` of substring. We try to extend the substring
+		by incrementing `end`. If the new character is already present in the substring, we increment
+		the `start` index and try again. At every step the substring in the window, between `start`
+		and `end` is a non repeating substring.
+		- In the worst case we access every character twice, first as `start` and then as `end`. Thus, time complexity
+		is O(N). Space complexity is O(S) as before because we still need to insert characters of the current
+		substring into a set, which in the worst case will contain all characters of the input alphabet (of size S).
+		- The sliding window approach can be further optimized. We can store the indices where the characters are found.
+		Then when adding a new character to the substring, if it is already present, we can make use of the stored
+		index to skip the previous occurrence, instead of just incrementing `start` by 1.
