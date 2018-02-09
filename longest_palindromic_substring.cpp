@@ -7,6 +7,7 @@
 // 1. Naive approach. For every substring check if it is a palindrome or not. Time - O(N^3),
 // Space - O(1).
 // 2. Expand palindrome from center. Time - O(N^2), Space - O(1).
+// 3. DP solution. Time - O(N^2), Space - O(N^2).
 
 #include <iostream>
 #include <string>
@@ -17,6 +18,7 @@ string longest_palindromic_substring1(const string& s);
 bool is_palindrome(const string& s, int start, int end);
 string longest_palindromic_substring2(const string& s);
 int expand(const string& s, int before, int after);
+string longest_palindromic_substring3(const string& s);
 
 int main()
 {
@@ -27,6 +29,9 @@ int main()
 	
 	cout << longest_palindromic_substring2(s1) << "\n";
 	cout << longest_palindromic_substring2(s2) << "\n";
+	
+	cout << longest_palindromic_substring3(s1) << "\n";
+	cout << longest_palindromic_substring3(s2) << "\n";
 	return 0;
 }
 
@@ -69,7 +74,7 @@ bool is_palindrome(const string& s, int start, int end)
 string longest_palindromic_substring2(const string& s)
 {
 	int size = s.size();
-	int start = 0, end = 0;
+	int start = 0;
 	int max_len = 0;
 	for(int i = 0; i < size; i++) {
 		int len1 = expand(s, i, i);
@@ -78,7 +83,6 @@ string longest_palindromic_substring2(const string& s)
 		if(len > max_len) {
 			max_len = len;
 			start = i - (len - 1) / 2;
-			end = i + len / 2;
 		}
 	}
 	
@@ -94,4 +98,23 @@ int expand(const string& s, int before, int after)
 	}
 	
 	return after - before - 1;
+}
+
+string longest_palindromic_substring3(const string& s)
+{
+	int size = s.size();
+	bool dp[size][size];
+	int max_len = 0, start = 0;
+	for(int i = size - 1; i >= 0; i--) {
+		for(int j = i; j < size; j++) {
+			int len = j - i + 1;
+			dp[i][j] = (s[i] == s[j] && (len < 3 || dp[i + 1][j - 1]));
+			if(dp[i][j] && len > max_len) {
+				max_len = len;
+				start = i;
+			}
+		}
+	}
+	
+	return s.substr(start, max_len);
 }
