@@ -1,4 +1,4 @@
-// Stack pancakes from smallest at top to largest at bottom. The only operation permitted is a filp.
+// Stack pancakes from smallest at top to largest at bottom. The only operation permitted is a flip.
 // A flip at index i reverses the elements from index 0 to i.
 // http://datagenetics.com/blog/february42018/index.html
 // https://austingwalters.com/everyday-algorithms-pancake-sort/
