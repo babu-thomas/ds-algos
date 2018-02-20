@@ -7,9 +7,11 @@
 // Output - -1
 
 // 1. Naive solution. Time - O(N^2), Space - O(1).
+// 2. Use hash table. Time - O(N), Space - O(N).
 
 #include <iostream>
 #include <string>
+#include <unordered_map>
 using namespace std;
 
 int max_unique_count1(const string& s)
@@ -39,6 +41,31 @@ int max_unique_count1(const string& s)
 	return max_count;
 }
 
+int max_unique_count2(const string& s)
+{
+	int size = s.size();
+	unordered_map<char, int> count;
+	for(auto& i: s)
+		count[i]++;
+		
+	int max_count = 0;
+	bool is_repeat = false;
+	for(auto& c: count) {
+		if(c.second > max_count) {
+			max_count = c.second;
+			is_repeat = false;
+		}
+		else if(c.second == max_count) {
+			is_repeat = true;
+		}
+	}
+	
+	if(is_repeat)
+		return -1;
+		
+	return max_count;
+}
+
 int main()
 {
 	string s1 = "aabb";
@@ -48,6 +75,10 @@ int main()
 	cout << max_unique_count1(s1) << "\n"
 		 << max_unique_count1(s2) << "\n"
 		 << max_unique_count1(s3) << "\n";
+		 
+	cout << max_unique_count2(s1) << "\n"
+		 << max_unique_count2(s2) << "\n"
+		 << max_unique_count2(s3) << "\n";
 	
 	return 0;
 }
